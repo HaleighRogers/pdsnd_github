@@ -5,6 +5,7 @@ import numpy as np
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
+DASH_CONSTANT = 60
 
 def get_filters():
     """
@@ -17,7 +18,12 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!\n')
 
+    MONTH_OPTIONS = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
+    DAY_OPTIONS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all']
     city = ''
+    month = ''
+    day = ''
+
     while city not in CITY_DATA.keys():
         print('Please choose the city you would like to view data from. Chicago, New York City, or Washington?')
         city = input().lower()
@@ -25,8 +31,6 @@ def get_filters():
         if city not in CITY_DATA.keys():
             print('Provided city is incorrect and not a valid selection...\n')
 
-    MONTH_OPTIONS = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
-    month = ''
     while month not in MONTH_OPTIONS:
         print('Please choose the month you would like to view data from. January, February, March, April, May, or June?')
         print('Or if you would like to view the data from all months please type: all')
@@ -35,8 +39,6 @@ def get_filters():
         if month not in MONTH_OPTIONS:
             print('Provided month is incorrect and not a valid selection...\n')
 
-    DAY_OPTIONS = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'all']
-    day = ''
     while day not in DAY_OPTIONS:
         print('Please choose the day you would like to view data from. Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, or Sunday?')
         print('Or if you would like to view the data from all days please type: all')
@@ -45,7 +47,7 @@ def get_filters():
         if day not in DAY_OPTIONS:
             print('Provided day is incorrect and not a valid selection...\n')
 
-    print('-'*60)
+    print('-'*DASH_CONSTANT)
     return city, month, day
 
 
@@ -96,7 +98,7 @@ def time_stats(df):
     print(f"\nMost common start hour: {most_common_hour}")
 
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*60)
+    print('-'*DASH_CONSTANT)
 
 
 def station_stats(df):
@@ -117,7 +119,7 @@ def station_stats(df):
     print(f"\nThe most frequent combination of trips are from {combo}")
 
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*60)
+    print('-'*DASH_CONSTANT)
 
 
 def trip_duration_stats(df):
@@ -143,7 +145,7 @@ def trip_duration_stats(df):
 
 
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*60)
+    print('-'*DASH_CONSTANT)
 
 
 def user_stats(df):
@@ -170,7 +172,7 @@ def user_stats(df):
         print("There is no birth year data for this city")
 
     print("\nThis took %s seconds." % (time.time() - start_time))
-    print('-'*60)
+    print('-'*DASH_CONSTANT)
 
 
 def display_raw_data(df):
@@ -201,7 +203,7 @@ def display_raw_data(df):
         else:
              break
 
-    print('-'*60)
+    print('-'*DASH_CONSTANT)
 
 def main():
     while True:
