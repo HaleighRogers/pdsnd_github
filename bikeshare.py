@@ -16,22 +16,22 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('Hello! Let\'s explore some US bikeshare data!\n')
-    
+
     city = ''
     while city not in CITY_DATA.keys():
         print('Please choose the city you would like to view data from. Chicago, New York City, or Washington?')
         city = input().lower()
-    
+
         if city not in CITY_DATA.keys():
             print('Provided city is incorrect and not a valid selection...\n')
-        
+
     MONTH_OPTIONS = ['january', 'february', 'march', 'april', 'may', 'june', 'all']
     month = ''
     while month not in MONTH_OPTIONS:
         print('Please choose the month you would like to view data from. January, February, March, April, May, or June?')
         print('Or if you would like to view the data from all months please type: all')
         month = input().lower()
-        
+
         if month not in MONTH_OPTIONS:
             print('Provided month is incorrect and not a valid selection...\n')
 
@@ -41,7 +41,7 @@ def get_filters():
         print('Please choose the day you would like to view data from. Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, or Sunday?')
         print('Or if you would like to view the data from all days please type: all')
         day = input().lower()
-        
+
         if day not in DAY_OPTIONS:
             print('Provided day is incorrect and not a valid selection...\n')
 
@@ -60,7 +60,7 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    
+
     print('...loading data...')
     print('-'*60)
     df = pd.read_csv(CITY_DATA[city])
@@ -68,7 +68,7 @@ def load_data(city, month, day):
 
     df['month'] = df['Start Time'].dt.month
     df['day_of_week'] = df['Start Time'].dt.weekday_name
-    
+
     if month != 'all':
         months = ['january', 'february', 'march', 'april', 'may', 'june']
         month = months.index(month) + 1
@@ -79,7 +79,7 @@ def load_data(city, month, day):
 
     return df
 
-                  
+
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
     print('\nCalculating The Most Frequent Times of Travel...\n')
@@ -140,7 +140,7 @@ def trip_duration_stats(df):
         print(f"\nThe average trip duration is {hrs} hour(s), {mins} minute(s) and {sec} second(s)")
     else:
         print(f"\nThe average trip duration is {mins} minute(s) and {sec} second(s)")
-    
+
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*60)
@@ -175,43 +175,48 @@ def user_stats(df):
 
 def display_raw_data(df):
     """Displays 5 rows of raw data from the csv file for the selected city."""
-    
+
     RESPONSE_OPTIONS = ['yes', 'no']
     raw_data = ''
-    
+
     while raw_data not in RESPONSE_OPTIONS:
         print('Do you want to see raw data for this city? Please type yes or no')
         raw_data = input().lower()
-        
+
         if raw_data == 'yes':
             print(df.head())
         elif raw_data not in RESPONSE_OPTIONS:
             print('Provided response is incorrect and not a valid selection...\n')
-            
+
     iterator = 0
     while raw_data == 'yes':
         print('Would you like to see more raw data for this city? Please type yes or no')
         iterator += 5
         raw_data = input().lower()
-        
+
         if raw_data == "yes":
              print(df[iterator:iterator+5])
         elif raw_data not in RESPONSE_OPTIONS:
             print('Provided response is incorrect and not a valid selection...\n')
         else:
              break
-                
+
     print('-'*60)
-    
+
 def main():
     while True:
         city, month, day = get_filters()
         df = load_data(city, month, day)
 
+        #looks at the stats for the most frequent time of travel
         time_stats(df)
+        #looks at the stats for most popular stations
         station_stats(df)
+        #looks at the stats for total and average trip durations
         trip_duration_stats(df)
+        #looks at the user type status
         user_stats(df)
+        #displays raw data from cvs files
         display_raw_data(df)
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
